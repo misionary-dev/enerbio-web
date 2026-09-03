@@ -1,0 +1,41 @@
+@config "../tailwind.config.ts";
+@import "tailwindcss";
+
+:root {
+  --background: #ffffff;
+  --foreground: #333333;
+}
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+
+body {
+  margin: 0;
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-inter), sans-serif;
+}
+
+h1, h2, h3, h4 { font-family: var(--font-montserrat), sans-serif; }
+::selection { background: #7cb342; color: #ffffff; }
+:focus-visible { outline: 3px solid #7cb342; outline-offset: 3px; }
+
+@keyframes word-fade {
+  0%, 12% { opacity: 0; }
+  20%, 88% { opacity: 1; }
+  100% { opacity: 0; }
+}
+
+@keyframes logo-scroll {
+  from { transform: translateX(0); }
+  to { transform: translateX(-33.3333%); }
+}
+
+.animate-word-fade { animation: word-fade 3s ease-in-out; }
+.animate-logo-scroll { animation: logo-scroll 40s linear infinite; width: max-content; }
+.animate-logo-scroll:hover { animation-play-state: paused; }
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .animate-word-fade, .animate-logo-scroll { animation: none; }
+}
