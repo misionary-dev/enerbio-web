@@ -1,3 +1,5 @@
-import { PlaceholderPage } from "@/components/layout/PlaceholderPage";
+import { Footer } from '@/components/layout/Footer'
+import { Header } from '@/components/layout/Header'
+import { TrabajaConNosotrosPageContent } from '@/components/forms/SiteForms'
 
-export default function TrabajaConNosotrosPage() { return <PlaceholderPage title="Trabajá con nosotros" />; }
+export default function TrabajaConNosotrosPage() { return <><Header /><TrabajaConNosotrosPageContent /><Footer /></> }

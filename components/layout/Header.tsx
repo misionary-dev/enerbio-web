@@ -3,6 +3,9 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import { EnerBioButtonPrimary } from "@/components/ui/EnerBioButton";
+import { ServiceIcon } from "@/components/ui/ServiceIcon";
+import { serviceNavItems } from "@/lib/data/servicePages";
 
 const links = [
   { label: "Inicio", href: "/" },
@@ -15,7 +18,9 @@ const links = [
 
 export function Header() {
   const [open, setOpen] = useState(false);
+  const [servicesOpen, setServicesOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const dropdownServices = serviceNavItems.filter((item) => item.href !== "/servicios");
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 8);
@@ -28,8 +33,8 @@ export function Header() {
     <>
       <div className="bg-enerbio-verde-oscuro text-white">
         <div className="mx-auto flex min-h-10 max-w-7xl items-center justify-end gap-5 px-4 text-xs font-semibold sm:gap-6 md:px-6 md:text-sm lg:px-8">
-          <a href="mailto:info@enerbio.com.ar">✉ info@enerbio.com.ar</a>
-          <a href="tel:+543584199465">☎ +54-3584-199-465</a>
+          <a href="mailto:info@enerbio.com.ar" className="flex items-center gap-2"><ServiceIcon name="email" className="h-3.5 w-3.5" />info@enerbio.com.ar</a>
+          <a href="tel:+543584199465" className="flex items-center gap-2"><ServiceIcon name="phone" className="h-3.5 w-3.5" />+54-3584-199-465</a>
         </div>
       </div>
 
@@ -41,13 +46,17 @@ export function Header() {
 
           <nav className="hidden items-center gap-5 lg:flex" aria-label="Navegación principal">
             {links.map((link) => (
-              <Link key={link.href} href={link.href} className="text-sm font-semibold text-enerbio-gris-texto transition-colors hover:text-enerbio-verde-acento">
-                {link.label}
-              </Link>
+              link.href === "/servicios" ? (
+                <div key={link.href} className="group relative flex items-center">
+                  <Link href={link.href} className="text-sm font-semibold text-enerbio-gris-texto transition-colors hover:text-enerbio-verde-acento">{link.label}</Link>
+                  <span className="ml-1 text-xs text-enerbio-gris-texto transition-transform group-hover:rotate-180" aria-hidden="true">▾</span>
+                  <div className="invisible absolute left-1/2 top-full z-50 w-80 -translate-x-1/2 pt-5 opacity-0 transition-all duration-200 group-hover:visible group-hover:opacity-100 group-focus-within:visible group-focus-within:opacity-100">
+                    <div className="rounded-lg border border-gray-200 bg-white p-2 shadow-xl">{dropdownServices.map((item) => <Link key={item.href} href={item.href} className={`block rounded-md px-4 py-3 text-sm font-semibold transition-colors hover:bg-[#F8F8F8] hover:text-enerbio-verde-acento ${item.href === '/vapor-y-energia' ? 'bg-enerbio-verde-oscuro text-white hover:bg-enerbio-azul-gris hover:text-white' : 'text-enerbio-gris-texto'}`}>{item.label}</Link>)}</div>
+                  </div>
+                </div>
+              ) : <Link key={link.href} href={link.href} className="text-sm font-semibold text-enerbio-gris-texto transition-colors hover:text-enerbio-verde-acento">{link.label}</Link>
             ))}
-            <Link href="/contacto" className="rounded-full bg-enerbio-verde-oscuro px-6 py-3 text-sm font-semibold text-white transition-colors hover:bg-enerbio-verde-acento">
-              Contactanos
-            </Link>
+            <EnerBioButtonPrimary href="/contacto" size="sm">Contactanos</EnerBioButtonPrimary>
           </nav>
 
           <button type="button" className="flex h-11 w-11 items-center justify-center rounded-lg border border-enerbio-verde-oscuro text-2xl text-enerbio-verde-oscuro lg:hidden" aria-label="Abrir menú" aria-expanded={open} onClick={() => setOpen(true)}>
@@ -61,9 +70,10 @@ export function Header() {
             <button type="button" className="ml-auto flex h-11 w-11 items-center justify-center rounded-lg text-2xl text-enerbio-verde-oscuro" aria-label="Cerrar menú" onClick={() => setOpen(false)}>×</button>
             <nav className="mt-8 flex flex-col gap-1">
               {links.map((link) => (
+                link.href === "/servicios" ? <div key={link.href} className="border-b border-gray-200"><div className="flex items-center justify-between"><Link href="/servicios" onClick={() => setOpen(false)} className="flex-1 py-4 font-semibold text-enerbio-gris-texto">Servicios</Link><button type="button" className="h-11 w-11 text-enerbio-verde-oscuro" aria-label="Mostrar servicios" aria-expanded={servicesOpen} onClick={() => setServicesOpen((value) => !value)}><span className={`inline-block transition-transform ${servicesOpen ? 'rotate-180' : ''}`}>▾</span></button></div>{servicesOpen && <div className="mb-3 border-l border-enerbio-verde-acento pl-4">{dropdownServices.map((item) => <Link key={item.href} href={item.href} onClick={() => setOpen(false)} className="block py-2 text-sm text-enerbio-gris-texto">{item.label}</Link>)}</div>}</div> :
                 <Link key={link.href} href={link.href} onClick={() => setOpen(false)} className="border-b border-gray-200 py-4 font-semibold text-enerbio-gris-texto">{link.label}</Link>
               ))}
-              <Link href="/contacto" onClick={() => setOpen(false)} className="mt-6 rounded-full bg-enerbio-verde-oscuro px-6 py-4 text-center font-semibold text-white">Contactanos</Link>
+              <div className="mt-6"><EnerBioButtonPrimary href="/contacto" size="sm" onClick={() => setOpen(false)}>Contactanos</EnerBioButtonPrimary></div>
             </nav>
           </aside>
         </div>

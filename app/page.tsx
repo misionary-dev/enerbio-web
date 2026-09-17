@@ -8,6 +8,7 @@ import { MetricasDestacadas } from "@/components/sections/MetricasDestacadas";
 import { PropuestaValor } from "@/components/sections/PropuestaValor";
 import { Proyectos } from "@/components/sections/Proyectos";
 import { Servicios } from "@/components/sections/Servicios";
+import { VaporEnergia } from "@/components/sections/VaporEnergia";
 import { SobreNosotros } from "@/components/sections/SobreNosotros";
 
 export default function Home() {
@@ -20,6 +21,7 @@ export default function Home() {
         <SobreNosotros />
         <PropuestaValor />
         <Servicios />
+        <VaporEnergia />
         <Proyectos />
         <EmpresasQueConfian />
         <EnerbioAmbiental />

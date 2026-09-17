@@ -1,13 +1,13 @@
 import Image from "next/image";
 import Link from "next/link";
+import { serviceNavItems } from "@/lib/data/servicePages";
+import { ServiceIcon } from "@/components/ui/ServiceIcon";
 
 const navigation = [
   ["Inicio", "/"], ["Nosotros", "/nosotros"], ["Servicios", "/servicios"],
   ["Proyectos", "/proyectos"], ["Enerbio Ambiental", "/enerbio-ambiental"],
   ["Trabajá con nosotros", "/trabaja-con-nosotros"], ["Contacto", "/contacto"],
 ] as const;
-
-const services = ["Análisis de Proyectos", "Ingeniería", "Montajes y Puesta en Marcha", "Operación y Mantenimiento", "Ambiental y Sustentabilidad"];
 
 export function Footer() {
   return (
@@ -28,14 +28,14 @@ export function Footer() {
           </div>
           <div>
             <h3 className="text-sm font-bold uppercase">Servicios</h3>
-            <ul className="mt-6 space-y-3 text-sm text-white/80">{services.map((service) => <li key={service}><Link href="/servicios" className="hover:text-enerbio-verde-claro">{service}</Link></li>)}</ul>
+            <ul className="mt-6 space-y-3 text-sm text-white/80">{serviceNavItems.slice(1).map((service) => <li key={service.href}><Link href={service.href} className="hover:text-enerbio-verde-claro">{service.label}</Link></li>)}</ul>
           </div>
           <div>
             <h3 className="text-sm font-bold uppercase">Contacto</h3>
             <div className="mt-6 space-y-5 text-sm leading-6 text-white/80">
-              <p>📍 Av. Belgrano 675<br />N3315 Leandro N. Alem<br />Misiones, Argentina</p>
-              <p>✉ <a href="mailto:info@enerbio.com.ar">info@enerbio.com.ar</a></p>
-              <p>☎ <a href="tel:+543584199465">+54 3584 199 465</a><br />Lunes a Viernes 24hs</p>
+              <p className="flex items-start gap-3"><span className="mt-0.5 flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-enerbio-verde-acento p-2 text-white"><ServiceIcon name="location" className="h-full w-full" /></span><span>Av. Belgrano 675<br />N3315 Leandro N. Alem<br />Misiones, Argentina</span></p>
+              <p className="flex items-center gap-3"><span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-enerbio-verde-acento p-2 text-white"><ServiceIcon name="email" className="h-full w-full" /></span><a href="mailto:info@enerbio.com.ar">info@enerbio.com.ar</a></p>
+              <p className="flex items-start gap-3"><span className="mt-0.5 flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-enerbio-verde-acento p-2 text-white"><ServiceIcon name="phone" className="h-full w-full" /></span><span><a href="tel:+543584199465">+54 3584 199 465</a><br />Lunes a Viernes 24hs</span></p>
             </div>
           </div>
         </div>
