@@ -12,6 +12,7 @@ export type ServicePageData = {
   ctaTitle: string
   ctaLabel: string
   environmentalNote?: boolean
+  bannerImage?: string
 }
 
 export const servicePages: ServicePageData[] = [
@@ -29,6 +30,7 @@ export const servicePages: ServicePageData[] = [
       { title: 'Asesoramiento Legal', description: 'Apoyo legal y regulatorio, preparación de documentación y representación ante autoridades.', icon: 'legal' },
     ],
     ctaTitle: '¿Estás evaluando un proyecto energético?', ctaLabel: 'Solicitá un análisis',
+    bannerImage: '/Enerbio/Stock/analisis-proyectos-banner.jpg',
   },
   {
     slug: 'ingenieria', eyebrow: 'Ingeniería', title: 'Diseño técnico de precisión para proyectos energéticos',
@@ -42,6 +44,7 @@ export const servicePages: ServicePageData[] = [
       { title: 'Re-ingeniería de Proyectos', description: 'Revisamos diseños, sistemas y procesos existentes para aumentar eficiencia y reducir costos operativos.', icon: 'optimization' },
     ],
     ctaTitle: '¿Necesitás ingeniería para tu proyecto?', ctaLabel: 'Solicitá cotización',
+    bannerImage: '/Enerbio/Stock/ingenieria-banner.jpg',
   },
   {
     slug: 'montajes-y-puesta-en-marcha', eyebrow: 'Montajes y puesta en marcha', title: 'De los planos a la operación real',
@@ -55,6 +58,7 @@ export const servicePages: ServicePageData[] = [
       { title: 'Supervisión de Obras Civiles', description: 'Coordinamos las obras civiles y su integración efectiva con los sistemas electromecánicos.', icon: 'construction' },
     ],
     ctaTitle: 'Confiá tu proyecto a manos expertas', ctaLabel: 'Contactanos',
+    bannerImage: '/Enerbio/Stock/montajes-banner.jpg',
   },
   {
     slug: 'operacion-y-mantenimiento', eyebrow: 'Operación y mantenimiento', title: 'Plantas funcionando 24/7, con la eficiencia que tu operación merece',
@@ -69,6 +73,7 @@ export const servicePages: ServicePageData[] = [
       { title: 'Capacitación', description: 'Transferimos conocimientos esenciales al personal del cliente para el manejo eficiente de las instalaciones.', icon: 'training' },
     ],
     ctaTitle: '¿Necesitás O&M para tu planta?', ctaLabel: 'Solicitá una propuesta',
+    bannerImage: '/Enerbio/Stock/operacion-mantenimiento-banner.jpg',
   },
   {
     slug: 'ambiental-y-sustentabilidad', eyebrow: 'Ambiental y sustentabilidad', title: 'Compromiso ambiental en cada etapa del proyecto',
@@ -83,6 +88,7 @@ export const servicePages: ServicePageData[] = [
       { title: 'Asesoramiento en Sostenibilidad', description: 'Implementamos prácticas de eficiencia energética y adopción de tecnologías verdes.', icon: 'sustainability' },
     ],
     ctaTitle: '¿Necesitás gestión ambiental para tu proyecto?', ctaLabel: 'Contactanos', environmentalNote: true,
+    bannerImage: '/Enerbio/Stock/ambiental-banner.jpg',
   },
 ]
 

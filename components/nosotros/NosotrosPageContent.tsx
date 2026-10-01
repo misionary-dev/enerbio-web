@@ -1,6 +1,7 @@
 'use client'
 
 import type { ReactNode } from 'react'
+import Image from 'next/image'
 import { EnerBioButtonAccent, EnerBioButtonPrimary, EnerBioButtonSecondary } from '@/components/ui/EnerBioButton'
 import { useInView } from '@/lib/hooks/useInView'
 
@@ -36,7 +37,8 @@ const revealClass = (isInView: boolean) =>
 export function NosotrosPageContent() {
   return (
     <main>
-      <section className="relative flex min-h-[500px] items-center overflow-hidden bg-[url('https://cdn-enerbio.misionary.com.ar/Banners/BannerWeb.webp')] bg-cover bg-center text-white md:min-h-[60vh]">
+      <section className="relative flex min-h-[500px] items-center overflow-hidden text-white md:min-h-[60vh]">
+        <Image src="/Enerbio/Stock/nosotros-banner.jpg" alt="EnerBio — Quiénes somos" fill className="object-cover" priority />
         <div className="absolute inset-0 bg-enerbio-verde-oscuro/80" />
         <div className="relative mx-auto w-full max-w-7xl px-4 py-24 md:px-6 lg:px-8">
           <p className="animate-fade-in text-sm font-semibold uppercase tracking-[0.2em] text-enerbio-verde-claro">Nosotros</p>

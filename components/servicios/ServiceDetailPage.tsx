@@ -1,6 +1,7 @@
 'use client'
 
 import type { ReactNode } from 'react'
+import Image from 'next/image'
 import Link from 'next/link'
 import type { ServicePageData } from '@/lib/data/servicePages'
 import { EnerBioButtonAccent, EnerBioButtonPrimary } from '@/components/ui/EnerBioButton'
@@ -17,7 +18,12 @@ const reveal = (visible: boolean) => `transition-all duration-700 ease-out motio
 export function ServiceDetailPage({ service }: { service: ServicePageData }) {
   return (
     <main>
-      <section className="relative flex min-h-[500px] items-center bg-[url('https://cdn-enerbio.misionary.com.ar/Banners/BannerWeb.webp')] bg-cover bg-center text-white md:min-h-[55vh]">
+      <section className="relative flex min-h-[500px] items-center text-white md:min-h-[55vh]">
+        {service.bannerImage ? (
+          <Image src={service.bannerImage} alt={service.eyebrow} fill className="object-cover" priority />
+        ) : (
+          <Image src="https://cdn-enerbio.misionary.com.ar/Banners/BannerWeb.webp" alt={service.eyebrow} fill className="object-cover" priority unoptimized />
+        )}
         <div className="absolute inset-0 bg-enerbio-verde-oscuro/82" />
         <div className="relative mx-auto w-full max-w-7xl px-4 py-24 md:px-6 lg:px-8">
           <div className="animate-fade-in flex gap-2 text-sm font-semibold uppercase tracking-[0.18em] text-enerbio-verde-claro"><Link href="/servicios">Servicios</Link><span>/</span><span>{service.eyebrow}</span></div>
