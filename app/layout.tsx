@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { Inter, Montserrat } from "next/font/google";
 import "./globals.css";
-import { WhatsAppButton } from "@/components/layout/WhatsAppButton";
 
 const montserrat = Montserrat({
   subsets: ["latin"],
@@ -36,7 +35,6 @@ export default function RootLayout({
           FINISH: unreviewed and undocumented is unfinished; this build ends with the finish review, the verdict, DESIGN.md, and every shipping raster carrying its provenance
         */}
         {children}
-        <WhatsAppButton />
       </body>
     </html>
   );

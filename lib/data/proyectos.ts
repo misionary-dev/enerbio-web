@@ -39,10 +39,10 @@ export const proyectos = [
     descripcion: "Proyecto de ingeniería de Layout para la ampliación de un molino harinero de 600 toneladas diarias con integración de energía renovable.",
     capacidad: "500 kW",
     estado: "Operativa",
-    imagen: "https://cdn-enerbio.misionary.com.ar/ProyectoMatilde/Proyecto.jpg",
+    imagen: "https://cdn-enerbio.misionary.com.ar/ProyectoMatilde/Final.jpeg",
     galeria: [
-      "https://cdn-enerbio.misionary.com.ar/ProyectoMatilde/Proyecto.jpg",
       "https://cdn-enerbio.misionary.com.ar/ProyectoMatilde/Final.jpeg",
+      "https://cdn-enerbio.misionary.com.ar/ProyectoMatilde/Proyecto.jpg",
       "https://cdn-enerbio.misionary.com.ar/ProyectoMatilde/Molino.jpeg",
       "https://cdn-enerbio.misionary.com.ar/ProyectoMatilde/Exporta.jpeg",
       "https://cdn-enerbio.misionary.com.ar/ProyectoMatilde/Trabajo.jpeg",

@@ -1,6 +1,7 @@
 "use client";
 
 import type { ReactNode } from "react";
+import Image from "next/image";
 import { Badge } from "@/components/ui/Badge";
 import { EnerBioButtonAccent } from "@/components/ui/EnerBioButton";
 import { useInView } from "@/lib/hooks/useInView";
@@ -51,7 +52,15 @@ export function EnerbioAmbiental() {
           </div>
           <div className={`${revealClass()} mt-9`} style={{ transitionDelay: "820ms" }}><EnerBioButtonAccent href="/enerbio-ambiental" size="lg" className="text-white">Descubrí Enerbio Ambiental →</EnerBioButtonAccent></div>
         </div>
-        <div className={`${revealClass()} flex aspect-square items-center justify-center rounded-2xl bg-gray-300 px-8 text-center text-gray-600`} style={{ transitionDelay: "300ms" }}>Imagen: Enerbio Ambiental</div>
+        <div className={`${revealClass()} relative aspect-square overflow-hidden rounded-2xl`} style={{ transitionDelay: "300ms" }}>
+          <Image
+            src="https://cdn-enerbio.misionary.com.ar/Img/aerial-shot-turbines-beautiful-green-fields-near-plowed-farms.webp"
+            alt="Turbinas eólicas — Enerbio Ambiental"
+            fill
+            className="object-cover"
+            sizes="(max-width: 1024px) 100vw, 40vw"
+          />
+        </div>
       </div>
     </section>
   );

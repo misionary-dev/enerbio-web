@@ -106,7 +106,13 @@ const proceso: { paso: string; titulo: string; icon: ServiceIconName; descripcio
   { paso: '04', titulo: 'Entrega y Seguimiento', icon: 'certificate', descripcion: 'Entrega del informe final con hallazgos, recomendaciones y plan de acción. Seguimiento continuo para asegurar implementación.' },
 ]
 
-const clientes = ['Teyma-Abengoa', 'CGC S.A. RenMDI', 'Rosario Bus', 'Yerbatero Amanda', 'Molino Matilde']
+const clientes: { nombre: string; logo?: string }[] = [
+  { nombre: 'Teyma-Abengoa' },
+  { nombre: 'CGC S.A. RenMDI', logo: 'https://cdn-enerbio.misionary.com.ar/logos-clientes/CGC_logo.jpg' },
+  { nombre: 'Rosario Bus', logo: 'https://cdn-enerbio.misionary.com.ar/logos-clientes/Rosario_Bus_logo.jpg' },
+  { nombre: 'Yerbatero Amanda', logo: 'https://cdn-enerbio.misionary.com.ar/logos-clientes/Logo_Amanda.png' },
+  { nombre: 'Molino Matilde', logo: 'https://cdn-enerbio.misionary.com.ar/logos-clientes/molinoMatilde.png' },
+]
 
 export function EnerBioAmbientalPageContent() {
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => { e.preventDefault() }
@@ -117,7 +123,7 @@ export function EnerBioAmbientalPageContent() {
       {/* ── 1. HERO ── */}
       <section id="inicio" className="relative flex min-h-[70vh] items-center text-white">
         <Image
-          src="/Enerbio/Stock/enerbio-ambiental-hero.jpg"
+          src="https://cdn-enerbio.misionary.com.ar/Img/aerial-shot-turbines-beautiful-green-fields-near-plowed-farms.webp"
           alt="Enerbio Ambiental — consultoría ambiental integral"
           fill
           className="object-cover"
@@ -182,7 +188,7 @@ export function EnerBioAmbientalPageContent() {
             <Reveal direction="right" delay={150}>
               <div className="relative aspect-[4/3] overflow-hidden rounded-2xl bg-enerbio-azul-gris">
                 <Image
-                  src="/Enerbio/Stock/ambiental-banner.jpg"
+                  src="https://cdn-enerbio.misionary.com.ar/Img/image-1790892684802.webp"
                   alt="Enerbio Ambiental — equipo en campo"
                   fill
                   className="object-cover opacity-80"
@@ -485,9 +491,15 @@ export function EnerBioAmbientalPageContent() {
           </Reveal>
           <div className="mt-12 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-5">
             {clientes.map((cliente, i) => (
-              <Reveal key={cliente} delay={i * 80}>
-                <div className="flex items-center justify-center rounded-xl bg-white px-6 py-6 shadow-sm ring-1 ring-gray-100 transition-shadow hover:shadow-md">
-                  <p className="text-center text-sm font-bold text-gray-400 transition-colors hover:text-enerbio-verde-oscuro">{cliente}</p>
+              <Reveal key={cliente.nombre} delay={i * 80}>
+                <div className="flex h-24 items-center justify-center rounded-xl bg-white px-6 py-4 shadow-sm ring-1 ring-gray-100 transition-shadow hover:shadow-md">
+                  {cliente.logo ? (
+                    <div className="relative h-14 w-full">
+                      <Image src={cliente.logo} alt={cliente.nombre} fill className="object-contain grayscale opacity-50 transition-all duration-300 hover:grayscale-0 hover:opacity-100" sizes="160px" />
+                    </div>
+                  ) : (
+                    <p className="text-center text-sm font-bold text-gray-400 transition-colors hover:text-enerbio-verde-oscuro">{cliente.nombre}</p>
+                  )}
                 </div>
               </Reveal>
             ))}

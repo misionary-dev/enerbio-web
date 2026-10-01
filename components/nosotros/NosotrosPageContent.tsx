@@ -38,7 +38,7 @@ export function NosotrosPageContent() {
   return (
     <main>
       <section className="relative flex min-h-[500px] items-center overflow-hidden text-white md:min-h-[60vh]">
-        <Image src="/Enerbio/Stock/nosotros-banner.jpg" alt="EnerBio — Quiénes somos" fill className="object-cover" priority />
+        <Image src="https://cdn-enerbio.misionary.com.ar/Banners/PortadaNosotros.jpg" alt="EnerBio — Quiénes somos" fill className="object-cover object-bottom" priority />
         <div className="absolute inset-0 bg-enerbio-verde-oscuro/80" />
         <div className="relative mx-auto w-full max-w-7xl px-4 py-24 md:px-6 lg:px-8">
           <p className="animate-fade-in text-sm font-semibold uppercase tracking-[0.2em] text-enerbio-verde-claro">Nosotros</p>
@@ -50,8 +50,8 @@ export function NosotrosPageContent() {
       <section className="bg-[#F8F8F8] py-24 md:py-32">
         <RevealGroup className="mx-auto grid max-w-7xl items-center gap-12 px-4 md:px-6 lg:grid-cols-2 lg:gap-16 lg:px-8">
           {(isInView) => <>
-          <div className={`${revealClass(isInView)} flex aspect-[4/3] items-center justify-center rounded-2xl bg-[#E8EDE6] px-8 text-center text-enerbio-gris-texto/65`}>
-            <div><span className="mx-auto block h-12 w-12 rounded-full border-2 border-enerbio-verde-acento" /><p className="mt-5 font-semibold">Foto histórica del equipo o primer proyecto</p><p className="mt-1 text-sm">Activo pendiente de validación</p></div>
+          <div className={`${revealClass(isInView)} relative aspect-[4/3] overflow-hidden rounded-2xl`}>
+            <Image src="https://cdn-enerbio.misionary.com.ar/Img/ImagenEquipo.jpg" alt="Equipo EnerBio" fill className="object-cover" sizes="(max-width: 1024px) 100vw, 50vw" />
           </div>
           <div>
             <p className={`${revealClass(isInView)} text-sm font-semibold uppercase tracking-[0.2em] text-enerbio-verde-acento`} style={{ transitionDelay: '100ms' }}>Nuestra historia</p>
@@ -98,35 +98,14 @@ export function NosotrosPageContent() {
             <div className={revealClass(isInView)} style={{ transitionDelay: '360ms' }}><p className="mt-5 font-semibold text-enerbio-verde-claro">Nicolás Barberis</p><p className="text-sm text-white/70">Gerente de Proyectos EnerBio Argentina y Paraguay</p></div>
             <p className={`${revealClass(isInView)} mt-8 max-w-xl leading-7 text-white/85`} style={{ transitionDelay: '480ms' }}>El know-how local es tan importante como la excelencia técnica. Trabajamos cerca del recurso, con equipos formados en el territorio que entienden la industria regional y sus necesidades reales.</p>
           </div>
-          <div className={`${revealClass(isInView)} flex aspect-[4/3] items-center justify-center rounded-2xl bg-white/10 px-8 text-center text-white/65`} style={{ transitionDelay: '260ms' }}><div><span className="mx-auto block h-12 w-12 rounded-full border-2 border-enerbio-verde-acento" /><p className="mt-5 font-semibold">Campo, tecnología y biomasa</p><p className="mt-1 text-sm">Imagen pendiente</p></div></div>
-          </>}
-        </RevealGroup>
-      </section>
-
-      <section className="bg-white py-24 md:py-32">
-        <RevealGroup className="mx-auto max-w-7xl px-4 md:px-6 lg:px-8">
-          {(isInView) => <>
-          <div className={`${revealClass(isInView)} mx-auto max-w-3xl text-center`}>
-            <p className="text-sm font-semibold uppercase tracking-[0.2em] text-enerbio-verde-acento">Nuestro equipo</p>
-            <h2 className="mt-4 text-4xl font-bold text-enerbio-azul-gris md:text-5xl">Un equipo multidisciplinario que conoce el territorio</h2>
-            <p className="mt-6 text-lg leading-8 text-enerbio-gris-texto">Más de 25 profesionales especializados en ingeniería eléctrica y mecánica, ingeniería ambiental, finanzas, operación y mantenimiento.</p>
-          </div>
-          <div className={`${revealClass(isInView)} mt-14 flex min-h-72 items-center justify-center rounded-2xl bg-[#E8EDE6] px-8 text-center text-enerbio-gris-texto/65`} style={{ transitionDelay: '160ms' }}><div><p className="text-xl font-bold text-enerbio-verde-oscuro">Foto del equipo EnerBio</p><p className="mt-2">Producción fotográfica pendiente</p></div></div>
-          <div className="mt-8 grid gap-6 md:grid-cols-2">
-            <article className={`${revealClass(isInView)} grid overflow-hidden rounded-2xl border border-gray-200 sm:grid-cols-[180px_1fr]`} style={{ transitionDelay: '300ms' }}><div className="flex min-h-48 items-center justify-center bg-enerbio-verde-oscuro text-5xl font-bold text-white">NB</div><div className="p-7"><p className="text-xs font-semibold uppercase tracking-[0.16em] text-enerbio-verde-acento">Argentina y Paraguay</p><h3 className="mt-3 text-2xl font-bold text-enerbio-verde-oscuro">Nicolás Barberis</h3><p className="mt-2 text-enerbio-gris-texto">Gerente de Proyectos</p><p className="mt-5 text-sm text-gray-500">Fotografía y perfil profesional pendientes de validación.</p></div></article>
-            <article className={`${revealClass(isInView)} flex min-h-48 items-center rounded-2xl border border-dashed border-enerbio-verde-acento bg-[#F8F8F8] p-8`} style={{ transitionDelay: '440ms' }}><div><p className="text-xs font-semibold uppercase tracking-[0.16em] text-enerbio-verde-acento">Equipo directivo</p><h3 className="mt-3 text-2xl font-bold text-enerbio-verde-oscuro">Perfiles en preparación</h3><p className="mt-3 leading-7 text-enerbio-gris-texto">Ingeniería, Montajes, O&M, Ambiental y la operación regional se incorporarán cuando nombres, cargos y fotografías estén confirmados.</p></div></article>
+          <div className={`${revealClass(isInView)} relative aspect-[4/3] overflow-hidden rounded-2xl`} style={{ transitionDelay: '260ms' }}>
+            <Image src="https://cdn-enerbio.misionary.com.ar/Img/IMG_8738.jpg" alt="Campo, tecnología y biomasa — EnerBio en operación" fill className="object-cover" sizes="(max-width: 1024px) 100vw, 50vw" />
           </div>
           </>}
         </RevealGroup>
       </section>
 
-      <section className="bg-enerbio-azul-gris py-20 text-white">
-        <RevealGroup className="mx-auto flex max-w-7xl flex-col items-start justify-between gap-8 px-4 md:flex-row md:items-center md:px-6 lg:px-8">
-          {(isInView) => <><div className={`${revealClass(isInView)} max-w-2xl`}><h2 className="text-3xl font-bold text-white md:text-4xl">¿Querés ser parte del equipo?</h2><p className="mt-4 text-lg leading-8 text-white/85">Buscamos talento apasionado por la energía renovable y el desarrollo sostenible. Sumate a un equipo que transforma industrias.</p></div><div className={revealClass(isInView)} style={{ transitionDelay: '180ms' }}><EnerBioButtonSecondary href="/trabaja-con-nosotros" size="lg">Ver oportunidades →</EnerBioButtonSecondary></div></>}
-        </RevealGroup>
-      </section>
-
-      <section className="bg-white py-20 text-center md:py-24">
+<section className="bg-white py-20 text-center md:py-24">
         <RevealGroup className="mx-auto max-w-3xl px-4 md:px-6">
           {(isInView) => <><h2 className={`${revealClass(isInView)} text-4xl font-bold text-enerbio-azul-gris md:text-5xl`}>Analicemos tu proyecto energético</h2><p className={`${revealClass(isInView)} mx-auto mt-5 max-w-2xl text-lg leading-8 text-enerbio-gris-texto`} style={{ transitionDelay: '140ms' }}>Contanos sobre tu industria y evaluemos juntos la mejor solución renovable para tu operación.</p><div className={`${revealClass(isInView)} mt-9 flex flex-col items-center justify-center gap-4 sm:flex-row`} style={{ transitionDelay: '280ms' }}><EnerBioButtonPrimary href="/contacto" size="lg">Contactanos</EnerBioButtonPrimary><EnerBioButtonAccent href="/proyectos" size="lg" className="text-white">Ver nuestros proyectos</EnerBioButtonAccent></div></>}
         </RevealGroup>

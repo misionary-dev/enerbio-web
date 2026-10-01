@@ -6,7 +6,7 @@ import { ServiceIcon } from "@/components/ui/ServiceIcon";
 const navigation = [
   ["Inicio", "/"], ["Nosotros", "/nosotros"], ["Servicios", "/servicios"],
   ["Proyectos", "/proyectos"], ["Enerbio Ambiental", "/enerbio-ambiental"],
-  ["Trabajá con nosotros", "/trabaja-con-nosotros"], ["Contacto", "/contacto"],
+  ["Contacto", "/contacto"],
 ] as const;
 
 export function Footer() {

@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { EnerBioButtonPrimary } from "@/components/ui/EnerBioButton";
 import { Reveal } from "@/components/ui/Reveal";
 
@@ -5,8 +6,14 @@ export function SobreNosotros() {
   return (
     <section className="relative bg-[#F8F8F8] pb-24 pt-24 md:pb-32 md:pt-32">
       <div className="mx-auto grid max-w-7xl items-center gap-12 px-4 md:px-6 lg:grid-cols-2 lg:gap-16 lg:px-8">
-        <Reveal direction="left" className="flex aspect-[4/5] items-center justify-center rounded-2xl bg-gray-200 px-8 text-center text-gray-500">
-          <span>Imagen: Planta EnerBio en operación</span>
+        <Reveal direction="left" className="relative aspect-[4/5] overflow-hidden rounded-2xl">
+          <Image
+            src="https://cdn-enerbio.misionary.com.ar/Img/Nosotros_Inicio.webp"
+            alt="Equipo EnerBio en planta"
+            fill
+            className="object-cover"
+            sizes="(max-width: 1024px) 100vw, 50vw"
+          />
         </Reveal>
         <Reveal direction="right">
           <div>

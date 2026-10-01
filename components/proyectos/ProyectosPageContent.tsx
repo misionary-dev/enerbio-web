@@ -37,7 +37,7 @@ export function ProyectosPageContent() {
     <main>
       {/* ── Hero ── */}
       <section className="relative flex min-h-[500px] items-center py-20 text-white md:min-h-[600px]">
-        <Image src="/Enerbio/Stock/proyectos-banner.jpg" alt="Proyectos EnerBio" fill className="object-cover" priority />
+        <Image src="https://cdn-enerbio.misionary.com.ar/Img/proyectos-banner.webp" alt="Proyectos EnerBio" fill className="object-cover" priority />
         <div className="absolute inset-0 bg-enerbio-verde-oscuro/82" />
         <div className="relative mx-auto max-w-7xl px-4 md:px-6 lg:px-8">
           <p className="text-sm font-semibold uppercase tracking-[0.2em] text-enerbio-verde-claro">
