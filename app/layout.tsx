@@ -18,6 +18,18 @@ export const metadata: Metadata = {
   title: "EnerBio SRL | Energía renovable",
   description:
     "Desarrollamos, financiamos, construimos y operamos centrales de energía renovable desde Misiones.",
+  icons: {
+    icon: "/icon.png",
+    apple: "/icon.png",
+  },
+  openGraph: {
+    title: "EnerBio SRL | Energía renovable",
+    description: "Desarrollamos, financiamos, construimos y operamos centrales de energía renovable desde Misiones.",
+    images: ["https://cdn-enerbio.misionary.com.ar/Iconos/3-Logo-EnerBio-ISO-verde-300x275.png"],
+    siteName: "EnerBio SRL",
+    locale: "es_AR",
+    type: "website",
+  },
 };
 
 export default function RootLayout({
