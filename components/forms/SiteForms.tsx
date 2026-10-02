@@ -1,6 +1,7 @@
 'use client'
 
 import type { FormEvent } from 'react'
+import { useState } from 'react'
 import Image from 'next/image'
 import { EnerBioButtonPrimary } from '@/components/ui/EnerBioButton'
 import { Reveal } from '@/components/ui/Reveal'
@@ -18,9 +19,82 @@ function ContactDetails() {
 }
 
 export function ContactPageContent() {
-  const handleSubmit = (event: FormEvent<HTMLFormElement>) => { event.preventDefault() }
+  const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle')
 
-  return <main><PageBanner eyebrow="Contacto" title="Analicemos tu proyecto energético" description="Contanos sobre tu industria y encontremos juntos la mejor solución energética o ambiental para tu operación." bannerImage="/Enerbio/Stock/contacto-banner.jpg" /><section className="bg-enerbio-gris-claro py-24 md:py-32"><div className="mx-auto grid max-w-7xl gap-12 px-4 md:px-6 lg:grid-cols-[2fr_3fr] lg:gap-16 lg:px-8"><Reveal direction="left"><p className="text-sm font-semibold uppercase tracking-[0.2em] text-enerbio-verde-acento">Estamos para ayudarte</p><h2 className="mt-4 text-4xl font-bold leading-tight text-enerbio-azul-gris md:text-5xl">Hablemos de tu próximo proyecto</h2><p className="mt-6 text-lg leading-8 text-enerbio-gris-texto">Completá el formulario y un miembro de nuestro equipo se pondrá en contacto para analizar tu necesidad.</p><div className="mt-9"><ContactDetails /></div></Reveal><Reveal direction="right"><form onSubmit={handleSubmit} className="rounded-2xl bg-white p-8 shadow-xl md:p-12"><div><label htmlFor="contacto-nombre" className={labelClass}>Nombre completo *</label><input id="contacto-nombre" name="nombre" type="text" required className={inputClass} /></div><div className="mt-6 grid gap-6 md:grid-cols-2"><div><label htmlFor="contacto-email" className={labelClass}>Email *</label><input id="contacto-email" name="email" type="email" required className={inputClass} /></div><div><label htmlFor="contacto-telefono" className={labelClass}>Teléfono *</label><input id="contacto-telefono" name="telefono" type="tel" required className={inputClass} /></div></div><div className="mt-6"><label htmlFor="contacto-empresa" className={labelClass}>Empresa *</label><input id="contacto-empresa" name="empresa" type="text" required className={inputClass} /></div><div className="mt-6"><label htmlFor="contacto-servicio" className={labelClass}>Servicio de interés *</label><select id="contacto-servicio" name="servicio" required defaultValue="" className={inputClass}><option value="" disabled>Seleccioná una opción</option><option value="analisis">Análisis de proyecto energético</option><option value="ingenieria">Ingeniería</option><option value="montajes">Montajes y puesta en marcha</option><option value="om">Operación y mantenimiento</option><option value="ambiental">Ambiental y sustentabilidad</option><option value="vapor">Vapor y Energía</option><option value="general">No estoy seguro / Consulta general</option></select></div><div className="mt-6"><label htmlFor="contacto-mensaje" className={labelClass}>Mensaje</label><textarea id="contacto-mensaje" name="mensaje" rows={5} className={inputClass} /></div><label className="mt-6 flex items-start gap-3 text-sm text-enerbio-gris-texto"><input type="checkbox" name="terminos" required className="mt-1 h-4 w-4 accent-enerbio-verde-oscuro" /><span>Aceptar términos *</span></label><div className="mt-8"><EnerBioButtonPrimary size="lg" type="submit">Enviar consulta</EnerBioButtonPrimary></div></form></Reveal></div></section></main>
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault()
+    setStatus('loading')
+    const form = event.currentTarget
+    const data = Object.fromEntries(new FormData(form))
+    try {
+      const res = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data),
+      })
+      if (!res.ok) throw new Error('error')
+      setStatus('success')
+      form.reset()
+    } catch {
+      setStatus('error')
+    }
+  }
+
+  return (
+    <main>
+      <PageBanner eyebrow="Contacto" title="Analicemos tu proyecto energético" description="Contanos sobre tu industria y encontremos juntos la mejor solución energética o ambiental para tu operación." bannerImage="/Enerbio/Stock/contacto-banner.jpg" />
+      <section className="bg-enerbio-gris-claro py-24 md:py-32">
+        <div className="mx-auto grid max-w-7xl gap-12 px-4 md:px-6 lg:grid-cols-[2fr_3fr] lg:gap-16 lg:px-8">
+          <Reveal direction="left">
+            <p className="text-sm font-semibold uppercase tracking-[0.2em] text-enerbio-verde-acento">Estamos para ayudarte</p>
+            <h2 className="mt-4 text-4xl font-bold leading-tight text-enerbio-azul-gris md:text-5xl">Hablemos de tu próximo proyecto</h2>
+            <p className="mt-6 text-lg leading-8 text-enerbio-gris-texto">Completá el formulario y un miembro de nuestro equipo se pondrá en contacto para analizar tu necesidad.</p>
+            <div className="mt-9"><ContactDetails /></div>
+          </Reveal>
+          <Reveal direction="right">
+            {status === 'success' ? (
+              <div className="flex min-h-[400px] flex-col items-center justify-center rounded-2xl bg-white p-8 text-center shadow-xl md:p-12">
+                <div className="flex h-16 w-16 items-center justify-center rounded-full bg-green-100 text-3xl text-green-600">✓</div>
+                <h3 className="mt-6 text-2xl font-bold text-enerbio-verde-oscuro">¡Consulta enviada!</h3>
+                <p className="mt-4 max-w-sm text-enerbio-gris-texto">Recibimos tu mensaje. Nos pondremos en contacto a la brevedad.</p>
+                <button type="button" onClick={() => setStatus('idle')} className="mt-8 text-sm font-semibold text-enerbio-verde-acento underline underline-offset-4">Enviar otra consulta</button>
+              </div>
+            ) : (
+              <form onSubmit={handleSubmit} className="rounded-2xl bg-white p-8 shadow-xl md:p-12">
+                <div><label htmlFor="contacto-nombre" className={labelClass}>Nombre completo *</label><input id="contacto-nombre" name="nombre" type="text" required className={inputClass} /></div>
+                <div className="mt-6 grid gap-6 md:grid-cols-2">
+                  <div><label htmlFor="contacto-email" className={labelClass}>Email *</label><input id="contacto-email" name="email" type="email" required className={inputClass} /></div>
+                  <div><label htmlFor="contacto-telefono" className={labelClass}>Teléfono *</label><input id="contacto-telefono" name="telefono" type="tel" required className={inputClass} /></div>
+                </div>
+                <div className="mt-6"><label htmlFor="contacto-empresa" className={labelClass}>Empresa *</label><input id="contacto-empresa" name="empresa" type="text" required className={inputClass} /></div>
+                <div className="mt-6">
+                  <label htmlFor="contacto-servicio" className={labelClass}>Servicio de interés *</label>
+                  <select id="contacto-servicio" name="servicio" required defaultValue="" className={inputClass}>
+                    <option value="" disabled>Seleccioná una opción</option>
+                    <option value="analisis">Análisis de proyecto energético</option>
+                    <option value="ingenieria">Ingeniería</option>
+                    <option value="montajes">Montajes y puesta en marcha</option>
+                    <option value="om">Operación y mantenimiento</option>
+                    <option value="ambiental">Ambiental y sustentabilidad</option>
+                    <option value="vapor">Vapor y Energía</option>
+                    <option value="general">No estoy seguro / Consulta general</option>
+                  </select>
+                </div>
+                <div className="mt-6"><label htmlFor="contacto-mensaje" className={labelClass}>Mensaje</label><textarea id="contacto-mensaje" name="mensaje" rows={5} className={inputClass} /></div>
+                <label className="mt-6 flex items-start gap-3 text-sm text-enerbio-gris-texto"><input type="checkbox" name="terminos" required className="mt-1 h-4 w-4 accent-enerbio-verde-oscuro" /><span>Aceptar términos *</span></label>
+                {status === 'error' && <p className="mt-4 text-sm text-red-600">Hubo un error al enviar. Intentá nuevamente o escribinos a info@enerbio.com.ar</p>}
+                <div className="mt-8">
+                  <EnerBioButtonPrimary size="lg" type="submit" disabled={status === 'loading'}>
+                    {status === 'loading' ? 'Enviando...' : 'Enviar consulta'}
+                  </EnerBioButtonPrimary>
+                </div>
+              </form>
+            )}
+          </Reveal>
+        </div>
+      </section>
+    </main>
+  )
 }
 
 export function TrabajaConNosotrosPageContent() {

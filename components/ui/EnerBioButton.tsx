@@ -14,6 +14,7 @@ interface EnerBioButtonProps {
   type?: 'button' | 'submit'
   variant?: Variant
   className?: string
+  disabled?: boolean
 }
 
 const sizeStyles: Record<Size, string> = {
@@ -44,11 +45,13 @@ function BaseButton({
   type = 'button',
   variant = 'primary',
   className,
+  disabled,
 }: Omit<EnerBioButtonProps, 'href'>) {
   return (
     <button
       onClick={onClick}
       type={type}
+      disabled={disabled}
       className={cn(
         // Base
         'relative inline-flex items-center justify-center',
@@ -70,6 +73,7 @@ function BaseButton({
         'before:z-[1]',
         // Contenido por encima del shine
         '[&>span]:relative [&>span]:z-[2]',
+        disabled && 'opacity-60 cursor-not-allowed pointer-events-none',
         className
       )}
     >
@@ -82,16 +86,17 @@ function BaseButton({
 // COMPONENTES EXPORTADOS
 // ═══════════════════════════════════════════════════════
 
-export function EnerBioButtonPrimary({ 
-  children, onClick, href, size = 'lg', type = 'button', className 
+export function EnerBioButtonPrimary({
+  children, onClick, href, size = 'lg', type = 'button', className, disabled
 }: EnerBioButtonProps) {
   const button = (
-    <BaseButton 
-      onClick={onClick} 
-      size={size} 
-      type={type} 
+    <BaseButton
+      onClick={onClick}
+      size={size}
+      type={type}
       variant="primary"
       className={className}
+      disabled={disabled}
     >
       {children}
     </BaseButton>
