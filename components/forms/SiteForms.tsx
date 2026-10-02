@@ -81,7 +81,6 @@ export function ContactPageContent() {
                   </select>
                 </div>
                 <div className="mt-6"><label htmlFor="contacto-mensaje" className={labelClass}>Mensaje</label><textarea id="contacto-mensaje" name="mensaje" rows={5} className={inputClass} /></div>
-                <label className="mt-6 flex items-start gap-3 text-sm text-enerbio-gris-texto"><input type="checkbox" name="terminos" required className="mt-1 h-4 w-4 accent-enerbio-verde-oscuro" /><span>Aceptar términos *</span></label>
                 {status === 'error' && <p className="mt-4 text-sm text-red-600">Hubo un error al enviar. Intentá nuevamente o escribinos a info@enerbio.com.ar</p>}
                 <div className="mt-8">
                   <EnerBioButtonPrimary size="lg" type="submit" disabled={status === 'loading'}>

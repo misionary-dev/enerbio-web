@@ -23,10 +23,10 @@ function teamNotificationHtml(data: Record<string, string>) {
 <table width="100%" cellpadding="0" cellspacing="0" style="background:#f4f4f4;padding:40px 20px;">
   <tr><td align="center">
     <table width="600" cellpadding="0" cellspacing="0" style="background:#ffffff;border-radius:8px;overflow:hidden;max-width:600px;width:100%;">
-      <tr><td style="background:#1a3a2e;padding:32px 40px;text-align:center;">
+      <tr><td style="background:#ffffff;padding:24px 40px;text-align:center;border-bottom:3px solid #2D5016;">
         <img src="https://cdn-enerbio.misionary.com.ar/Iconos/Logo-Enerbio.webp" alt="EnerBio" width="160" style="height:auto;" />
       </td></tr>
-      <tr><td style="background:#4caf50;padding:12px 40px;text-align:center;">
+      <tr><td style="background:#2D5016;padding:12px 40px;text-align:center;">
         <p style="margin:0;color:#ffffff;font-size:14px;font-weight:bold;letter-spacing:2px;text-transform:uppercase;">Nueva consulta recibida</p>
       </td></tr>
       <tr><td style="padding:40px;">
@@ -61,7 +61,7 @@ function clientThankYouHtml({ nombre }: { nombre: string }) {
 <table width="100%" cellpadding="0" cellspacing="0" style="background:#f4f4f4;padding:40px 20px;">
   <tr><td align="center">
     <table width="600" cellpadding="0" cellspacing="0" style="background:#ffffff;border-radius:8px;overflow:hidden;max-width:600px;width:100%;">
-      <tr><td style="background:#1a3a2e;padding:32px 40px;text-align:center;">
+      <tr><td style="background:#ffffff;padding:24px 40px;text-align:center;border-bottom:3px solid #2D5016;">
         <img src="https://cdn-enerbio.misionary.com.ar/Iconos/Logo-Enerbio.webp" alt="EnerBio" width="160" style="height:auto;" />
       </td></tr>
       <tr><td style="padding:48px 40px 36px;text-align:center;">

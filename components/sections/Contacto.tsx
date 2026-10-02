@@ -1,6 +1,7 @@
 "use client";
 
 import type { FormEvent } from "react";
+import { useState } from "react";
 import { EnerBioButtonPrimary } from "@/components/ui/EnerBioButton";
 import { Reveal } from "@/components/ui/Reveal";
 import { ServiceIcon } from "@/components/ui/ServiceIcon";
@@ -9,10 +10,25 @@ const inputClass = "mt-2 w-full rounded-lg border border-gray-300 px-4 py-3 text
 const labelClass = "text-sm font-semibold text-enerbio-verde-oscuro";
 
 export function Contacto() {
-  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+  const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
+
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    // TODO: Fase 2 - Conectar con servicio de envío. Email destino: info@enerbio.com.ar
-    console.log("Form submitted - TODO: conectar servicio");
+    setStatus('loading');
+    const form = event.currentTarget;
+    const data = Object.fromEntries(new FormData(form));
+    try {
+      const res = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data),
+      });
+      if (!res.ok) throw new Error('error');
+      setStatus('success');
+      form.reset();
+    } catch {
+      setStatus('error');
+    }
   };
 
   return (
@@ -29,7 +45,14 @@ export function Contacto() {
           </div>
           <div className="mt-8 flex gap-3"><a href="https://www.linkedin.com/in/enerbio-s-r-l-34753a254/" target="_blank" rel="noreferrer" aria-label="LinkedIn" className="flex h-11 w-11 items-center justify-center rounded-full bg-enerbio-verde-oscuro font-semibold text-white">in</a><a href="https://www.instagram.com/enerbiosrl/" target="_blank" rel="noreferrer" aria-label="Instagram" className="flex h-11 w-11 items-center justify-center rounded-full bg-enerbio-verde-oscuro font-semibold text-white">ig</a></div>
         </Reveal>
-        <Reveal direction="right"><form onSubmit={handleSubmit} className="rounded-2xl bg-white p-8 shadow-xl md:p-12">
+        <Reveal direction="right">{status === 'success' ? (
+          <div className="flex min-h-[400px] flex-col items-center justify-center rounded-2xl bg-white p-8 text-center shadow-xl md:p-12">
+            <div className="flex h-16 w-16 items-center justify-center rounded-full bg-green-100 text-3xl text-green-600">✓</div>
+            <h3 className="mt-6 text-2xl font-bold text-enerbio-verde-oscuro">¡Consulta enviada!</h3>
+            <p className="mt-4 max-w-sm text-enerbio-gris-texto">Recibimos tu mensaje. Nos pondremos en contacto a la brevedad.</p>
+            <button type="button" onClick={() => setStatus('idle')} className="mt-8 text-sm font-semibold text-enerbio-verde-acento underline underline-offset-4">Enviar otra consulta</button>
+          </div>
+        ) : <form onSubmit={handleSubmit} className="rounded-2xl bg-white p-8 shadow-xl md:p-12">
           <div><label htmlFor="nombre" className={labelClass}>Nombre completo *</label><input id="nombre" name="nombre" type="text" required className={inputClass} /></div>
           <div className="mt-6 grid gap-6 md:grid-cols-2">
             <div><label htmlFor="email" className={labelClass}>Email *</label><input id="email" name="email" type="email" required className={inputClass} /></div>
@@ -38,9 +61,9 @@ export function Contacto() {
           <div className="mt-6"><label htmlFor="empresa" className={labelClass}>Empresa *</label><input id="empresa" name="empresa" type="text" required className={inputClass} /></div>
           <div className="mt-6"><label htmlFor="servicio" className={labelClass}>Servicio de interés *</label><select id="servicio" name="servicio" required defaultValue="" className={inputClass}><option value="" disabled>Seleccioná una opción</option><optgroup label="— Servicios Energéticos —"><option value="analisis">Análisis de proyecto energético</option><option value="ingenieria">Ingeniería</option><option value="montajes">Montajes y puesta en marcha</option><option value="om">Operación y mantenimiento</option></optgroup><optgroup label="— Enerbio Ambiental —"><option value="impacto">Estudios de impacto ambiental</option><option value="huella">Huella de carbono</option><option value="bonos">Certificaciones y bonos de carbono</option><option value="consultoria">Consultoría ambiental integral</option></optgroup><optgroup label="— Otros —"><option value="general">No estoy seguro / Consulta general</option></optgroup></select></div>
           <div className="mt-6"><label htmlFor="mensaje" className={labelClass}>Mensaje</label><textarea id="mensaje" name="mensaje" rows={4} className={inputClass} /></div>
-          <label className="mt-6 flex items-start gap-3 text-sm text-enerbio-gris-texto"><input type="checkbox" name="terminos" required className="mt-1 h-4 w-4 accent-enerbio-verde-oscuro" /><span>Aceptar términos *</span></label>
-          <div className="mt-8"><EnerBioButtonPrimary size="lg" type="submit">Enviar consulta →</EnerBioButtonPrimary></div>
-        </form></Reveal>
+          {status === 'error' && <p className="mt-4 text-sm text-red-600">Hubo un error al enviar. Escribinos a info@enerbio.com.ar</p>}
+          <div className="mt-8"><EnerBioButtonPrimary size="lg" type="submit" disabled={status === 'loading'}>{status === 'loading' ? 'Enviando...' : 'Enviar consulta →'}</EnerBioButtonPrimary></div>
+        </form>}</Reveal>
       </div>
     </section>
   );
