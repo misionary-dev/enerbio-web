@@ -1,8 +1,6 @@
 import { NextResponse } from 'next/server'
 import { Resend } from 'resend'
 
-const resend = new Resend(process.env.RESEND_API_KEY)
-
 const TEAM_EMAILS = ['adm.enerbiosrl@gmail.com', 'roettitomas@gmail.com']
 const FROM_EMAIL = 'EnerBio <noreply@enerbiosrl.com>'
 
@@ -103,6 +101,7 @@ function clientThankYouHtml({ nombre }: { nombre: string }) {
 
 export async function POST(request: Request) {
   try {
+    const resend = new Resend(process.env.RESEND_API_KEY)
     const body = await request.json() as Record<string, string>
     const { nombre, email, telefono, empresa, servicio, mensaje } = body
 
