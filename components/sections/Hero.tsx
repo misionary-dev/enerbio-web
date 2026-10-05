@@ -6,7 +6,6 @@ import { EnerBioButtonPrimary, EnerBioButtonSecondary } from "@/components/ui/En
 import TypewriterText from "@/components/ui/TypewriterText";
 
 const SLIDES = [
-  "https://cdn-enerbio.misionary.com.ar/Banners/BannerWeb.jpg",
   "https://cdn-enerbio.misionary.com.ar/Banners/BannerWeb2.webp",
   "https://cdn-enerbio.misionary.com.ar/Banners/BannerWeb3.webp",
   "https://cdn-enerbio.misionary.com.ar/Banners/BannerWeb4.webp",
