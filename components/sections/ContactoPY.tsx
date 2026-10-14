@@ -1,0 +1,85 @@
+"use client";
+
+import type { FormEvent } from "react";
+import { useState } from "react";
+import { EnerBioButtonPrimary } from "@/components/ui/EnerBioButton";
+import { Reveal } from "@/components/ui/Reveal";
+import { ServiceIcon } from "@/components/ui/ServiceIcon";
+
+const inputClass = "mt-2 w-full rounded-lg border border-gray-300 px-4 py-3 text-enerbio-gris-texto outline-none focus:border-enerbio-verde-acento focus:ring-2 focus:ring-enerbio-verde-acento/20";
+const labelClass = "text-sm font-semibold text-enerbio-verde-oscuro";
+
+export function ContactoPY() {
+  const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
+
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    setStatus('loading');
+    const form = event.currentTarget;
+    const data = Object.fromEntries(new FormData(form));
+    try {
+      const res = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ ...data, pais: 'Paraguay' }),
+      });
+      if (!res.ok) throw new Error('error');
+      setStatus('success');
+      form.reset();
+    } catch {
+      setStatus('error');
+    }
+  };
+
+  return (
+    <section id="contacto" className="bg-enerbio-gris-claro py-24 md:py-32">
+      <div className="mx-auto grid max-w-7xl gap-12 px-4 md:px-6 lg:grid-cols-[2fr_3fr] lg:gap-16 lg:px-8">
+        <Reveal direction="left">
+          <p className="text-sm font-semibold uppercase tracking-[0.2em] text-enerbio-verde-acento">Contacto</p>
+          <h2 className="mt-4 text-4xl font-bold leading-tight text-enerbio-azul-gris md:text-5xl">Analicemos tu proyecto energético</h2>
+          <p className="mt-6 text-lg leading-8 text-enerbio-gris-texto">Contanos sobre tu proyecto y un miembro de nuestro equipo en Paraguay te contactará para analizar la mejor solución energética para tu industria.</p>
+          <div className="mt-9 space-y-5">
+            <div className="flex items-center gap-4"><span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-enerbio-verde-oscuro p-3 text-white"><ServiceIcon name="email" className="h-full w-full" /></span><div><p className="font-semibold text-enerbio-verde-oscuro">nicolas.barberis@enerbio.com.py</p><p className="mt-1 text-sm text-gray-600">Consultas generales</p></div></div>
+            <div className="flex items-center gap-4"><span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-enerbio-verde-oscuro p-3 text-white"><ServiceIcon name="phone" className="h-full w-full" /></span><div><p className="font-semibold text-enerbio-verde-oscuro">+595 982 718 264</p><p className="mt-1 text-sm text-gray-600">Lunes a Viernes 24hs</p></div></div>
+            <div className="flex items-center gap-4"><span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-enerbio-verde-oscuro p-3 text-white"><ServiceIcon name="location" className="h-full w-full" /></span><div><p className="font-semibold text-enerbio-verde-oscuro">Av. Brasilia 1947, 3er Piso, Of 422</p><p className="mt-1 text-sm text-gray-600">Asunción, Paraguay</p></div></div>
+          </div>
+          <div className="mt-8 flex gap-3"><a href="https://www.linkedin.com/in/enerbio-s-r-l-34753a254/" target="_blank" rel="noreferrer" aria-label="LinkedIn" className="flex h-11 w-11 items-center justify-center rounded-full bg-enerbio-verde-oscuro font-semibold text-white">in</a><a href="https://www.instagram.com/enerbiosrl/" target="_blank" rel="noreferrer" aria-label="Instagram" className="flex h-11 w-11 items-center justify-center rounded-full bg-enerbio-verde-oscuro font-semibold text-white">ig</a></div>
+        </Reveal>
+        <Reveal direction="right">
+          {status === 'success' ? (
+            <div className="flex min-h-[400px] flex-col items-center justify-center rounded-2xl bg-white p-8 text-center shadow-xl md:p-12">
+              <div className="flex h-16 w-16 items-center justify-center rounded-full bg-green-100 text-3xl text-green-600">✓</div>
+              <h3 className="mt-6 text-2xl font-bold text-enerbio-verde-oscuro">¡Consulta enviada!</h3>
+              <p className="mt-4 max-w-sm text-enerbio-gris-texto">Recibimos tu mensaje. Nos pondremos en contacto a la brevedad.</p>
+              <button type="button" onClick={() => setStatus('idle')} className="mt-8 text-sm font-semibold text-enerbio-verde-acento underline underline-offset-4">Enviar otra consulta</button>
+            </div>
+          ) : (
+            <form onSubmit={handleSubmit} className="rounded-2xl bg-white p-8 shadow-xl md:p-12">
+              <div><label htmlFor="py-nombre" className={labelClass}>Nombre completo *</label><input id="py-nombre" name="nombre" type="text" required className={inputClass} /></div>
+              <div className="mt-6 grid gap-6 md:grid-cols-2">
+                <div><label htmlFor="py-email" className={labelClass}>Email *</label><input id="py-email" name="email" type="email" required className={inputClass} /></div>
+                <div><label htmlFor="py-telefono" className={labelClass}>Teléfono *</label><input id="py-telefono" name="telefono" type="tel" required className={inputClass} /></div>
+              </div>
+              <div className="mt-6"><label htmlFor="py-empresa" className={labelClass}>Empresa *</label><input id="py-empresa" name="empresa" type="text" required className={inputClass} /></div>
+              <div className="mt-6">
+                <label htmlFor="py-servicio" className={labelClass}>Servicio de interés *</label>
+                <select id="py-servicio" name="servicio" required defaultValue="" className={inputClass}>
+                  <option value="" disabled>Seleccioná una opción</option>
+                  <option value="analisis">Análisis de proyecto energético</option>
+                  <option value="ingenieria">Ingeniería</option>
+                  <option value="montajes">Montajes y puesta en marcha</option>
+                  <option value="om">Operación y mantenimiento</option>
+                  <option value="vapor">Vapor y Energía</option>
+                  <option value="general">No estoy seguro / Consulta general</option>
+                </select>
+              </div>
+              <div className="mt-6"><label htmlFor="py-mensaje" className={labelClass}>Mensaje</label><textarea id="py-mensaje" name="mensaje" rows={4} className={inputClass} /></div>
+              {status === 'error' && <p className="mt-4 text-sm text-red-600">Hubo un error al enviar. Escribinos a nicolas.barberis@enerbio.com.py</p>}
+              <div className="mt-8"><EnerBioButtonPrimary size="lg" type="submit" disabled={status === 'loading'}>{status === 'loading' ? 'Enviando...' : 'Enviar consulta →'}</EnerBioButtonPrimary></div>
+            </form>
+          )}
+        </Reveal>
+      </div>
+    </section>
+  );
+}

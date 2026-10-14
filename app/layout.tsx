@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Inter, Montserrat } from "next/font/google";
 import "./globals.css";
+import { CountrySelector } from "@/components/ui/CountrySelector";
 
 const montserrat = Montserrat({
   subsets: ["latin"],
@@ -46,6 +47,7 @@ export default function RootLayout({
           FORM: Estructura institucional especificada por el documento maestro; implementación code-first por instrucción directa.
           FINISH: unreviewed and undocumented is unfinished; this build ends with the finish review, the verdict, DESIGN.md, and every shipping raster carrying its provenance
         */}
+        <CountrySelector />
         {children}
       </body>
     </html>

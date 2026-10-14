@@ -15,7 +15,7 @@ const SERVICIO_LABELS: Record<string, string> = {
 }
 
 function teamNotificationHtml(data: Record<string, string>) {
-  const { nombre, email, telefono, empresa, servicio, mensaje } = data
+  const { nombre, email, telefono, empresa, servicio, mensaje, pais } = data
   return `<!DOCTYPE html>
 <html lang="es">
 <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>Nueva consulta — EnerBio</title></head>
@@ -36,6 +36,7 @@ function teamNotificationHtml(data: Record<string, string>) {
           <tr><td style="padding:12px 0;border-bottom:1px solid #eee;"><strong style="color:#888;font-size:12px;text-transform:uppercase;letter-spacing:1px;">Email</strong><br><a href="mailto:${email}" style="color:#4caf50;font-size:16px;text-decoration:none;">${email}</a></td></tr>
           <tr><td style="padding:12px 0;border-bottom:1px solid #eee;"><strong style="color:#888;font-size:12px;text-transform:uppercase;letter-spacing:1px;">Teléfono</strong><br><a href="tel:${telefono}" style="color:#1a3a2e;font-size:16px;text-decoration:none;font-weight:600;">${telefono}</a></td></tr>
           <tr><td style="padding:12px 0;border-bottom:1px solid #eee;"><strong style="color:#888;font-size:12px;text-transform:uppercase;letter-spacing:1px;">Empresa</strong><br><span style="color:#1a3a2e;font-size:16px;font-weight:600;">${empresa}</span></td></tr>
+          <tr><td style="padding:12px 0;border-bottom:1px solid #eee;"><strong style="color:#888;font-size:12px;text-transform:uppercase;letter-spacing:1px;">País</strong><br><span style="color:#1a3a2e;font-size:16px;font-weight:600;">${pais}</span></td></tr>
           <tr><td style="padding:12px 0;${mensaje ? 'border-bottom:1px solid #eee;' : ''}"><strong style="color:#888;font-size:12px;text-transform:uppercase;letter-spacing:1px;">Servicio de interés</strong><br><span style="color:#1a3a2e;font-size:16px;font-weight:600;">${servicio}</span></td></tr>
           ${mensaje ? `<tr><td style="padding:12px 0;"><strong style="color:#888;font-size:12px;text-transform:uppercase;letter-spacing:1px;">Mensaje</strong><br><span style="color:#333;font-size:15px;line-height:1.7;">${mensaje.replace(/\n/g, '<br>')}</span></td></tr>` : ''}
         </table>
@@ -103,20 +104,22 @@ export async function POST(request: Request) {
   try {
     const resend = new Resend(process.env.RESEND_API_KEY)
     const body = await request.json() as Record<string, string>
-    const { nombre, email, telefono, empresa, servicio, mensaje } = body
+    const { nombre, email, telefono, empresa, servicio, mensaje, pais } = body
 
     if (!nombre || !email || !telefono || !empresa || !servicio) {
       return NextResponse.json({ error: 'Faltan campos requeridos' }, { status: 400 })
     }
 
     const servicioLabel = SERVICIO_LABELS[servicio] ?? servicio
+    const paisLabel = pais ?? 'Argentina'
+    const subject = `Nueva consulta de ${nombre} — ${empresa}${pais === 'Paraguay' ? ' 🇵🇾' : ''}`
 
     await Promise.all([
       resend.emails.send({
         from: FROM_EMAIL,
         to: TEAM_EMAILS,
-        subject: `Nueva consulta de ${nombre} — ${empresa}`,
-        html: teamNotificationHtml({ nombre, email, telefono, empresa, servicio: servicioLabel, mensaje: mensaje ?? '' }),
+        subject,
+        html: teamNotificationHtml({ nombre, email, telefono, empresa, servicio: servicioLabel, mensaje: mensaje ?? '', pais: paisLabel }),
       }),
       resend.emails.send({
         from: FROM_EMAIL,
