@@ -1,5 +1,3 @@
-import { Footer } from "@/components/layout/Footer";
-import { Header } from "@/components/layout/Header";
 import { ContactoPY } from "@/components/sections/ContactoPY";
 import { EmpresasQueConfian } from "@/components/sections/EmpresasQueConfian";
 import { Hero } from "@/components/sections/Hero";
@@ -12,20 +10,16 @@ import { SobreNosotros } from "@/components/sections/SobreNosotros";
 
 export default function HomePY() {
   return (
-    <>
-      <Header />
-      <main>
-        <Hero />
-        <MetricasDestacadas />
-        <SobreNosotros />
-        <PropuestaValor />
-        <Servicios />
-        <VaporEnergia />
-        <Proyectos />
-        <EmpresasQueConfian />
-        <ContactoPY />
-      </main>
-      <Footer />
-    </>
+    <main>
+      <Hero />
+      <MetricasDestacadas />
+      <SobreNosotros />
+      <PropuestaValor />
+      <Servicios />
+      <VaporEnergia />
+      <Proyectos />
+      <EmpresasQueConfian />
+      <ContactoPY />
+    </main>
   );
 }

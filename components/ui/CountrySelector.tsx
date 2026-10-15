@@ -42,14 +42,14 @@ export function CountrySelector() {
             onClick={() => choose('ar')}
             className="flex flex-1 flex-col items-center gap-3 rounded-xl border-2 border-transparent bg-enerbio-gris-claro p-5 transition-all duration-200 hover:border-enerbio-verde-acento hover:bg-white hover:shadow-md"
           >
-            <span className="text-5xl">🇦🇷</span>
+            <img src="https://flagcdn.com/w80/ar.png" alt="Argentina" width={80} height={53} className="rounded shadow-sm" />
             <span className="font-bold text-enerbio-verde-oscuro">Argentina</span>
           </button>
           <button
             onClick={() => choose('py')}
             className="flex flex-1 flex-col items-center gap-3 rounded-xl border-2 border-transparent bg-enerbio-gris-claro p-5 transition-all duration-200 hover:border-enerbio-verde-acento hover:bg-white hover:shadow-md"
           >
-            <span className="text-5xl">🇵🇾</span>
+            <img src="https://flagcdn.com/w80/py.png" alt="Paraguay" width={80} height={53} className="rounded shadow-sm" />
             <span className="font-bold text-enerbio-verde-oscuro">Paraguay</span>
           </button>
         </div>
