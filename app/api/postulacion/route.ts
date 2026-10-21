@@ -1,3 +1,4 @@
+import { getCloudflareContext } from '@opennextjs/cloudflare'
 import { Resend } from 'resend'
 
 export const runtime = 'edge'
@@ -19,6 +20,25 @@ export async function POST(request: Request) {
     }
 
     const cvBuffer = await cvFile.arrayBuffer()
+
+    // Subir a R2 via binding nativo de Cloudflare
+    const safeName = `${nombre}-${apellido}`.replace(/[^a-zA-Z0-9-]/g, '_')
+    const ext = cvFile.name.split('.').pop() ?? 'pdf'
+    const key = `postulaciones/${Date.now()}-${safeName}.${ext}`
+
+    try {
+      const { env } = await getCloudflareContext()
+      const bucket = (env as Record<string, R2Bucket>)['ENERBIO_BUCKET']
+      if (bucket) {
+        await bucket.put(key, cvBuffer, {
+          httpMetadata: { contentType: cvFile.type || 'application/pdf' },
+          customMetadata: { nombre, apellido, email, asunto },
+        })
+      }
+    } catch {
+      // Si falla R2, seguimos igual — el CV va adjunto al email
+    }
+
     const cvBase64 = btoa(String.fromCharCode(...new Uint8Array(cvBuffer)))
 
     const resend = new Resend(process.env.RESEND_API_KEY)
@@ -88,10 +108,7 @@ export async function POST(request: Request) {
         to: ['adm.enerbiosrl@gmail.com', 'roettitomas@gmail.com'],
         subject: `Nueva postulación: ${nombre} ${apellido} — ${asunto}`,
         html: notificacionHtml,
-        attachments: [{
-          filename: cvFile.name,
-          content: cvBase64,
-        }],
+        attachments: [{ filename: cvFile.name, content: cvBase64 }],
       }),
       resend.emails.send({
         from: 'EnerBio <noreply@enerbiosrl.com>',
