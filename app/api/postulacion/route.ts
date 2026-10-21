@@ -140,7 +140,8 @@ export async function POST(request: Request) {
 
     return Response.json({ ok: true })
   } catch (err) {
-    console.error('Error en postulacion:', err)
-    return Response.json({ error: 'Error interno' }, { status: 500 })
+    const msg = err instanceof Error ? err.message : String(err)
+    console.error('Error en postulacion:', msg)
+    return Response.json({ error: 'Error interno', detail: msg }, { status: 500 })
   }
 }
