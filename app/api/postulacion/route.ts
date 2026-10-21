@@ -1,8 +1,6 @@
 import { getCloudflareContext } from '@opennextjs/cloudflare'
 import { Resend } from 'resend'
 
-export const runtime = 'edge'
-
 function bufferToBase64(buffer: ArrayBuffer): string {
   const bytes = new Uint8Array(buffer)
   let binary = ''
