@@ -1,38 +1,6 @@
-import { AwsClient } from 'aws4fetch'
 import { Resend } from 'resend'
 
 export const runtime = 'edge'
-
-function getR2Client() {
-  return new AwsClient({
-    accessKeyId: process.env.R2_ACCESS_KEY_ID!,
-    secretAccessKey: process.env.R2_SECRET_ACCESS_KEY!,
-    service: 's3',
-    region: 'auto',
-  })
-}
-
-async function uploadToR2(key: string, body: ArrayBuffer, contentType: string): Promise<void> {
-  const aws = getR2Client()
-  const url = `${process.env.R2_ENDPOINT}/${process.env.R2_BUCKET_NAME}/${key}`
-  const res = await aws.fetch(url, {
-    method: 'PUT',
-    body,
-    headers: {
-      'Content-Type': contentType,
-      'Content-Disposition': `attachment; filename="${key.split('/').pop()}"`,
-    },
-  })
-  if (!res.ok) throw new Error(`R2 upload failed: ${res.status}`)
-}
-
-async function getPresignedUrl(key: string): Promise<string> {
-  const aws = getR2Client()
-  const url = new URL(`${process.env.R2_ENDPOINT}/${process.env.R2_BUCKET_NAME}/${key}`)
-  url.searchParams.set('X-Amz-Expires', String(60 * 60 * 24 * 7))
-  const signed = await aws.sign(new Request(url.toString(), { method: 'GET' }), { aws: { signQuery: true } })
-  return signed.url
-}
 
 export async function POST(request: Request) {
   try {
@@ -50,14 +18,8 @@ export async function POST(request: Request) {
       return Response.json({ error: 'CV requerido' }, { status: 400 })
     }
 
-    const safeName = `${nombre}-${apellido}`.replace(/[^a-zA-Z0-9-]/g, '_')
-    const ext = cvFile.name.split('.').pop() ?? 'pdf'
-    const key = `postulaciones/${Date.now()}-${safeName}.${ext}`
-
     const cvBuffer = await cvFile.arrayBuffer()
-    await uploadToR2(key, cvBuffer, cvFile.type || 'application/octet-stream')
-
-    const downloadUrl = await getPresignedUrl(key)
+    const cvBase64 = btoa(String.fromCharCode(...new Uint8Array(cvBuffer)))
 
     const resend = new Resend(process.env.RESEND_API_KEY)
     const fecha = new Date().toLocaleDateString('es-AR', { day: '2-digit', month: '2-digit', year: 'numeric' })
@@ -83,10 +45,7 @@ export async function POST(request: Request) {
             <tr><td style="padding:12px 16px;font-size:13px;font-weight:bold;color:#1a3a2e">Asunto</td><td style="padding:12px 16px;font-size:13px;color:#333">${asunto}</td></tr>
             ${mensaje ? `<tr style="background:#f8f8f8"><td style="padding:12px 16px;font-size:13px;font-weight:bold;color:#1a3a2e">Mensaje</td><td style="padding:12px 16px;font-size:13px;color:#333">${mensaje}</td></tr>` : ''}
           </table>
-          <div style="margin:32px 0;text-align:center">
-            <a href="${downloadUrl}" style="display:inline-block;background:#2d6a4f;color:#ffffff;text-decoration:none;padding:14px 32px;border-radius:8px;font-weight:bold;font-size:15px">Descargar CV →</a>
-            <p style="margin:12px 0 0;color:#999;font-size:12px">Este link es válido por 7 días.</p>
-          </div>
+          <p style="margin:24px 0 0;color:#555;font-size:14px">El CV de ${nombre} ${apellido} está adjunto a este email.</p>
         </td></tr>
         <tr><td style="background:#f8f8f8;padding:20px 40px;text-align:center;color:#999;font-size:12px">EnerBio SRL · info@enerbio.com.ar</td></tr>
       </table>
@@ -129,6 +88,10 @@ export async function POST(request: Request) {
         to: ['adm.enerbiosrl@gmail.com', 'roettitomas@gmail.com'],
         subject: `Nueva postulación: ${nombre} ${apellido} — ${asunto}`,
         html: notificacionHtml,
+        attachments: [{
+          filename: cvFile.name,
+          content: cvBase64,
+        }],
       }),
       resend.emails.send({
         from: 'EnerBio <noreply@enerbiosrl.com>',
