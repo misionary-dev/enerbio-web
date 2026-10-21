@@ -28,7 +28,8 @@ export async function POST(request: Request) {
 
     try {
       const { env } = await getCloudflareContext()
-      const bucket = (env as Record<string, R2Bucket>)['ENERBIO_BUCKET']
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const bucket = (env as any)['ENERBIO_BUCKET']
       if (bucket) {
         await bucket.put(key, cvBuffer, {
           httpMetadata: { contentType: cvFile.type || 'application/pdf' },
