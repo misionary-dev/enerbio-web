@@ -3,6 +3,16 @@ import { Resend } from 'resend'
 
 export const runtime = 'edge'
 
+function bufferToBase64(buffer: ArrayBuffer): string {
+  const bytes = new Uint8Array(buffer)
+  let binary = ''
+  const chunkSize = 8192
+  for (let i = 0; i < bytes.length; i += chunkSize) {
+    binary += String.fromCharCode(...bytes.subarray(i, Math.min(i + chunkSize, bytes.length)))
+  }
+  return btoa(binary)
+}
+
 export async function POST(request: Request) {
   try {
     const formData = await request.formData()
@@ -40,7 +50,7 @@ export async function POST(request: Request) {
       // Si falla R2, seguimos igual — el CV va adjunto al email
     }
 
-    const cvBase64 = btoa(String.fromCharCode(...new Uint8Array(cvBuffer)))
+    const cvBase64 = bufferToBase64(cvBuffer)
 
     const resend = new Resend(process.env.RESEND_API_KEY)
     const fecha = new Date().toLocaleDateString('es-AR', { day: '2-digit', month: '2-digit', year: 'numeric' })
