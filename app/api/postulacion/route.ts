@@ -50,7 +50,7 @@ export async function POST(request: Request) {
     const downloadUrl = await getSignedUrl(
       r2,
       new GetObjectCommand({ Bucket: process.env.R2_BUCKET_NAME!, Key: key }),
-      { expiresIn: 60 * 60 * 24 * 30 }
+      { expiresIn: 60 * 60 * 24 * 7 }
     )
 
     // Enviar emails
