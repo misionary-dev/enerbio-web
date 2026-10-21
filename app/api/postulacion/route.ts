@@ -1,18 +1,37 @@
-import { S3Client, PutObjectCommand, GetObjectCommand } from '@aws-sdk/client-s3'
-import { getSignedUrl } from '@aws-sdk/s3-request-presigner'
+import { AwsClient } from 'aws4fetch'
 import { Resend } from 'resend'
 
 export const runtime = 'edge'
 
 function getR2Client() {
-  return new S3Client({
+  return new AwsClient({
+    accessKeyId: process.env.R2_ACCESS_KEY_ID!,
+    secretAccessKey: process.env.R2_SECRET_ACCESS_KEY!,
+    service: 's3',
     region: 'auto',
-    endpoint: process.env.R2_ENDPOINT!,
-    credentials: {
-      accessKeyId: process.env.R2_ACCESS_KEY_ID!,
-      secretAccessKey: process.env.R2_SECRET_ACCESS_KEY!,
+  })
+}
+
+async function uploadToR2(key: string, body: ArrayBuffer, contentType: string): Promise<void> {
+  const aws = getR2Client()
+  const url = `${process.env.R2_ENDPOINT}/${process.env.R2_BUCKET_NAME}/${key}`
+  const res = await aws.fetch(url, {
+    method: 'PUT',
+    body,
+    headers: {
+      'Content-Type': contentType,
+      'Content-Disposition': `attachment; filename="${key.split('/').pop()}"`,
     },
   })
+  if (!res.ok) throw new Error(`R2 upload failed: ${res.status}`)
+}
+
+async function getPresignedUrl(key: string): Promise<string> {
+  const aws = getR2Client()
+  const url = new URL(`${process.env.R2_ENDPOINT}/${process.env.R2_BUCKET_NAME}/${key}`)
+  url.searchParams.set('X-Amz-Expires', String(60 * 60 * 24 * 7))
+  const signed = await aws.sign(new Request(url.toString(), { method: 'GET' }), { aws: { signQuery: true } })
+  return signed.url
 }
 
 export async function POST(request: Request) {
@@ -31,29 +50,15 @@ export async function POST(request: Request) {
       return Response.json({ error: 'CV requerido' }, { status: 400 })
     }
 
-    // Subir CV a R2
-    const r2 = getR2Client()
     const safeName = `${nombre}-${apellido}`.replace(/[^a-zA-Z0-9-]/g, '_')
     const ext = cvFile.name.split('.').pop() ?? 'pdf'
     const key = `postulaciones/${Date.now()}-${safeName}.${ext}`
 
     const cvBuffer = await cvFile.arrayBuffer()
-    await r2.send(new PutObjectCommand({
-      Bucket: process.env.R2_BUCKET_NAME!,
-      Key: key,
-      Body: new Uint8Array(cvBuffer),
-      ContentType: cvFile.type || 'application/octet-stream',
-      ContentDisposition: `attachment; filename="${cvFile.name}"`,
-    }))
+    await uploadToR2(key, cvBuffer, cvFile.type || 'application/octet-stream')
 
-    // Generar link de descarga (válido 30 días)
-    const downloadUrl = await getSignedUrl(
-      r2,
-      new GetObjectCommand({ Bucket: process.env.R2_BUCKET_NAME!, Key: key }),
-      { expiresIn: 60 * 60 * 24 * 7 }
-    )
+    const downloadUrl = await getPresignedUrl(key)
 
-    // Enviar emails
     const resend = new Resend(process.env.RESEND_API_KEY)
     const fecha = new Date().toLocaleDateString('es-AR', { day: '2-digit', month: '2-digit', year: 'numeric' })
 
@@ -80,7 +85,7 @@ export async function POST(request: Request) {
           </table>
           <div style="margin:32px 0;text-align:center">
             <a href="${downloadUrl}" style="display:inline-block;background:#2d6a4f;color:#ffffff;text-decoration:none;padding:14px 32px;border-radius:8px;font-weight:bold;font-size:15px">Descargar CV →</a>
-            <p style="margin:12px 0 0;color:#999;font-size:12px">Este link es válido por 30 días.</p>
+            <p style="margin:12px 0 0;color:#999;font-size:12px">Este link es válido por 7 días.</p>
           </div>
         </td></tr>
         <tr><td style="background:#f8f8f8;padding:20px 40px;text-align:center;color:#999;font-size:12px">EnerBio SRL · info@enerbio.com.ar</td></tr>
@@ -102,13 +107,13 @@ export async function POST(request: Request) {
           <img src="https://cdn-enerbio.misionary.com.ar/Iconos/Logo-Enerbio.webp" alt="EnerBio" height="48" style="display:block;margin:0 auto" />
         </td></tr>
         <tr><td style="padding:40px;text-align:center">
-          <div style="width:64px;height:64px;background:#e8f5e9;border-radius:50%;margin:0 auto 24px;display:flex;align-items:center;justify-content:center;font-size:28px">✓</div>
+          <div style="width:64px;height:64px;background:#e8f5e9;border-radius:50%;margin:0 auto 24px;line-height:64px;font-size:28px;color:#2d6a4f">✓</div>
           <h2 style="margin:0 0 16px;color:#1a3a2e;font-size:24px">¡Gracias, ${nombre}!</h2>
           <p style="margin:0 0 16px;color:#555;font-size:16px;line-height:1.6">Recibimos tu postulación y tu CV correctamente. Nuestro equipo lo va a revisar y te vamos a contactar si tu perfil encaja con una búsqueda activa o futura.</p>
           <p style="margin:0;color:#888;font-size:14px">Seguinos en LinkedIn e Instagram para estar al tanto de nuestras novedades.</p>
-          <div style="margin:32px 0;display:flex;gap:12px;justify-content:center">
-            <a href="https://www.linkedin.com/in/enerbio-s-r-l-34753a254/" style="display:inline-block;background:#1a3a2e;color:#fff;text-decoration:none;padding:10px 20px;border-radius:6px;font-weight:bold;font-size:13px">LinkedIn</a>
-            <a href="https://www.instagram.com/enerbiosrl/" style="display:inline-block;background:#1a3a2e;color:#fff;text-decoration:none;padding:10px 20px;border-radius:6px;font-weight:bold;font-size:13px">Instagram</a>
+          <div style="margin:32px 0">
+            <a href="https://www.linkedin.com/in/enerbio-s-r-l-34753a254/" style="display:inline-block;background:#1a3a2e;color:#fff;text-decoration:none;padding:10px 20px;border-radius:6px;font-weight:bold;font-size:13px;margin:0 6px">LinkedIn</a>
+            <a href="https://www.instagram.com/enerbiosrl/" style="display:inline-block;background:#1a3a2e;color:#fff;text-decoration:none;padding:10px 20px;border-radius:6px;font-weight:bold;font-size:13px;margin:0 6px">Instagram</a>
           </div>
         </td></tr>
         <tr><td style="background:#f8f8f8;padding:20px 40px;text-align:center;color:#999;font-size:12px">EnerBio SRL · info@enerbio.com.ar</td></tr>
