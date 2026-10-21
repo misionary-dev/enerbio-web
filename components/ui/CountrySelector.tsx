@@ -12,13 +12,13 @@ export function CountrySelector() {
   useEffect(() => {
     if (pathname.startsWith('/py')) return
     try {
-      const stored = localStorage.getItem('enerbio-country')
-      if (!stored) setVisible(true)
+      if (sessionStorage.getItem('country-chosen')) return
     } catch {}
+    setVisible(true)
   }, [pathname])
 
   const choose = (country: 'ar' | 'py') => {
-    try { localStorage.setItem('enerbio-country', country) } catch {}
+    try { sessionStorage.setItem('country-chosen', '1') } catch {}
     setVisible(false)
     if (country === 'py') router.push('/py')
   }

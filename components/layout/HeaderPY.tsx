@@ -39,7 +39,7 @@ export function HeaderPY() {
     <>
       <div className="bg-enerbio-verde-oscuro text-white">
         <div className="mx-auto flex min-h-10 max-w-7xl items-center justify-end gap-5 px-4 text-xs font-semibold sm:gap-6 md:px-6 md:text-sm lg:px-8">
-          <a href="mailto:nicolas.barberis@enerbio.com.py" className="flex items-center gap-2"><ServiceIcon name="email" className="h-3.5 w-3.5" />nicolas.barberis@enerbio.com.py</a>
+          <a href="mailto:info@enerbio.com.py" className="flex items-center gap-2"><ServiceIcon name="email" className="h-3.5 w-3.5" />info@enerbio.com.py</a>
           <a href="tel:+595982718264" className="flex items-center gap-2"><ServiceIcon name="phone" className="h-3.5 w-3.5" />+595 982 718 264</a>
         </div>
       </div>

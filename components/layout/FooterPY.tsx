@@ -6,6 +6,7 @@ import { ServiceIcon } from "@/components/ui/ServiceIcon";
 const navigation = [
   ["Inicio", "/py"], ["Nosotros", "/py/nosotros"], ["Servicios", "/py/servicios"],
   ["Proyectos", "/py/proyectos"], ["Contacto", "/py/contacto"],
+  ["Trabajá con nosotros", "/trabaja-con-nosotros"],
 ] as const;
 
 const serviceNavPY = [
@@ -40,7 +41,7 @@ export function FooterPY() {
             <h3 className="text-sm font-bold uppercase">Contacto</h3>
             <div className="mt-6 space-y-5 text-sm leading-6 text-white/80">
               <p className="flex items-start gap-3"><span className="mt-0.5 flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-enerbio-verde-acento p-2 text-white"><ServiceIcon name="location" className="h-full w-full" /></span><span>Av. Brasilia 1947, 3er Piso, Of 422<br />Asunción, Paraguay</span></p>
-              <p className="flex items-center gap-3"><span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-enerbio-verde-acento p-2 text-white"><ServiceIcon name="email" className="h-full w-full" /></span><a href="mailto:nicolas.barberis@enerbio.com.py">nicolas.barberis@enerbio.com.py</a></p>
+              <p className="flex items-center gap-3"><span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-enerbio-verde-acento p-2 text-white"><ServiceIcon name="email" className="h-full w-full" /></span><a href="mailto:info@enerbio.com.py">info@enerbio.com.py</a></p>
               <p className="flex items-start gap-3"><span className="mt-0.5 flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-enerbio-verde-acento p-2 text-white"><ServiceIcon name="phone" className="h-full w-full" /></span><a href="tel:+595982718264">+595 982 718 264</a></p>
             </div>
           </div>

@@ -5,15 +5,15 @@ import { MetricasDestacadas } from "@/components/sections/MetricasDestacadas";
 import { PropuestaValor } from "@/components/sections/PropuestaValor";
 import { Proyectos } from "@/components/sections/Proyectos";
 import { Servicios } from "@/components/sections/Servicios";
+import { SobreNosotrosPY } from "@/components/sections/SobreNosotrosPY";
 import { VaporEnergia } from "@/components/sections/VaporEnergia";
-import { SobreNosotros } from "@/components/sections/SobreNosotros";
 
 export default function HomePY() {
   return (
     <main>
-      <Hero />
+      <Hero tagline="Desde Asunción, Paraguay, para la industria de la región" />
       <MetricasDestacadas />
-      <SobreNosotros />
+      <SobreNosotrosPY />
       <PropuestaValor />
       <Servicios />
       <VaporEnergia />

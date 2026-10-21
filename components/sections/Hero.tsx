@@ -13,7 +13,7 @@ const SLIDES = [
 
 const INTERVAL = 5000;
 
-export function Hero() {
+export function Hero({ tagline }: { tagline?: string } = {}) {
   const [current, setCurrent] = useState(0);
 
   useEffect(() => {
@@ -50,7 +50,7 @@ export function Hero() {
       <div className="relative mx-auto w-full max-w-7xl px-4 pb-28 pt-20 md:px-6 md:pb-36 lg:px-8">
         <div className="max-w-4xl">
           <p className="animate-fade-in text-sm tracking-widest text-enerbio-verde-claro md:text-base">
-            Desde el corazón del polo forestal más importante de Argentina
+            {tagline ?? "Desde el corazón del polo forestal más importante de Argentina"}
           </p>
           <h1 className="animate-fade-up delay-200 mt-5 text-4xl font-bold leading-tight md:text-6xl lg:text-7xl">
             Energía renovable para tu{" "}

@@ -13,6 +13,7 @@ const links = [
   { label: "Servicios", href: "/servicios" },
   { label: "Proyectos", href: "/proyectos" },
   { label: "Enerbio Ambiental", href: "/enerbio-ambiental" },
+  { label: "Trabajá con nosotros", href: "/trabaja-con-nosotros" },
 ];
 
 export function Header() {

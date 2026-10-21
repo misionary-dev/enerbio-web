@@ -39,7 +39,7 @@ export function ContactoPY() {
           <h2 className="mt-4 text-4xl font-bold leading-tight text-enerbio-azul-gris md:text-5xl">Analicemos tu proyecto energético</h2>
           <p className="mt-6 text-lg leading-8 text-enerbio-gris-texto">Contanos sobre tu proyecto y un miembro de nuestro equipo en Paraguay te contactará para analizar la mejor solución energética para tu industria.</p>
           <div className="mt-9 space-y-5">
-            <div className="flex items-center gap-4"><span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-enerbio-verde-oscuro p-3 text-white"><ServiceIcon name="email" className="h-full w-full" /></span><div><p className="font-semibold text-enerbio-verde-oscuro">nicolas.barberis@enerbio.com.py</p><p className="mt-1 text-sm text-gray-600">Consultas generales</p></div></div>
+            <div className="flex items-center gap-4"><span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-enerbio-verde-oscuro p-3 text-white"><ServiceIcon name="email" className="h-full w-full" /></span><div><p className="font-semibold text-enerbio-verde-oscuro">info@enerbio.com.py</p><p className="mt-1 text-sm text-gray-600">Consultas generales</p></div></div>
             <div className="flex items-center gap-4"><span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-enerbio-verde-oscuro p-3 text-white"><ServiceIcon name="phone" className="h-full w-full" /></span><div><p className="font-semibold text-enerbio-verde-oscuro">+595 982 718 264</p><p className="mt-1 text-sm text-gray-600">Lunes a Viernes 24hs</p></div></div>
             <div className="flex items-center gap-4"><span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-enerbio-verde-oscuro p-3 text-white"><ServiceIcon name="location" className="h-full w-full" /></span><div><p className="font-semibold text-enerbio-verde-oscuro">Av. Brasilia 1947, 3er Piso, Of 422</p><p className="mt-1 text-sm text-gray-600">Asunción, Paraguay</p></div></div>
           </div>
@@ -74,7 +74,7 @@ export function ContactoPY() {
                 </select>
               </div>
               <div className="mt-6"><label htmlFor="py-mensaje" className={labelClass}>Mensaje</label><textarea id="py-mensaje" name="mensaje" rows={4} className={inputClass} /></div>
-              {status === 'error' && <p className="mt-4 text-sm text-red-600">Hubo un error al enviar. Escribinos a nicolas.barberis@enerbio.com.py</p>}
+              {status === 'error' && <p className="mt-4 text-sm text-red-600">Hubo un error al enviar. Escribinos a info@enerbio.com.py</p>}
               <div className="mt-8"><EnerBioButtonPrimary size="lg" type="submit" disabled={status === 'loading'}>{status === 'loading' ? 'Enviando...' : 'Enviar consulta →'}</EnerBioButtonPrimary></div>
             </form>
           )}
