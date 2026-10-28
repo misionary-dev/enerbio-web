@@ -57,7 +57,7 @@ export function Hero({ tagline }: { tagline?: string } = {}) {
             <TypewriterText words={["industria", "proceso", "operación", "negocio"]} className="text-enerbio-verde-acento" />
           </h1>
           <p className="animate-fade-in delay-500 mt-7 max-w-3xl text-lg leading-8 text-white/90 md:text-xl">
-            Desarrollamos, financiamos, construimos y operamos centrales de cogeneración a partir de biomasa, biogás y solar. Potencia firme los 365 días del año, integrada a tu proceso industrial. Del residuo al recurso, del análisis de proyecto a la operación 24/7.
+            Desarrollamos, construimos y operamos centrales de cogeneración a partir de biomasa, biogás y solar. Potencia firme los 365 días del año, integrada a tu proceso industrial. Del residuo al recurso, del análisis de proyecto a la operación 24/7.
           </p>
           <div className="animate-fade-up delay-800 mt-9 flex flex-col gap-4 [animation-duration:600ms] sm:flex-row">
             <EnerBioButtonPrimary href="#contacto" size="lg">Analicemos tu proyecto</EnerBioButtonPrimary>
