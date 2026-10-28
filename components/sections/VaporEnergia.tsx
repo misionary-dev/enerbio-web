@@ -16,8 +16,8 @@ export function VaporEnergia() {
         <div>
           <span className="inline-flex rounded-full bg-enerbio-verde-acento px-4 py-2 text-xs font-semibold uppercase tracking-widest">Nuestro modelo insignia</span>
           <h2 className="mt-6 text-4xl font-bold leading-tight md:text-6xl">Vapor y Energía</h2>
-          <p className="mt-5 max-w-2xl text-xl leading-8 text-enerbio-verde-claro md:text-2xl">Comprás energía y vapor. Nosotros nos encargamos de todo lo demás.</p>
-          <p className="mt-6 max-w-2xl leading-7 text-white/85">EnerBio desarrolla, financia, construye y opera una planta renovable diseñada para tu industria. Vos pagás por lo que consumís, sin inversión inicial y con un equipo especializado a cargo de la operación.</p>
+          <p className="mt-5 max-w-2xl text-xl leading-8 text-enerbio-verde-claro md:text-2xl">EnerBio desarrolla, financia, construye y opera una planta renovable diseñada para tu industria.</p>
+          <p className="mt-6 max-w-2xl leading-7 text-white/85">Comprás energía y vapor. Nosotros nos encargamos de todo lo demás: el diseño, el financiamiento, la construcción y la operación continua de la planta. Vos pagás solo por lo que consumís, sin inversión inicial.</p>
           <div className="mt-9"><EnerBioButtonAccent href="/vapor-y-energia" className="text-white">Conocé Vapor y Energía →</EnerBioButtonAccent></div>
         </div>
         <div className="grid gap-4 sm:grid-cols-2">
